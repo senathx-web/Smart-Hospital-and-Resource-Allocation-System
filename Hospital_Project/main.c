@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void welcomeMenu();
 int main()
 {
-    //Main programme goes here
+    welcomeMenu();
 
 }

@@ -31,6 +31,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="calculations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="data.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="display.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="input.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
