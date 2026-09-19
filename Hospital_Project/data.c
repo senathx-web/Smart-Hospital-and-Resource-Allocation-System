@@ -5,26 +5,25 @@
 #define MAX_BEDS 20
 
 // Doctor specialties
-char *specialtyNames[] = {"General Practice (OPD)",
+char *specialtyNames[NUM_SPECIALTIES] = {"General Practice (OPD)",
                            "Paediatrics",
                            "Cardiology",
                            "Neurology" };
 
-float specialtyFees[] = {1500.00,2500.00,4500.00,5000.00};
-int consultationTimes[] ={15,20,30,30};
-
-int dailyPatientCap[] = {30,20,12,10};
+float specialtyFees[NUM_SPECIALTIES] = {1500.00,2500.00,4500.00,5000.00};
+int consultationTimes[NUM_SPECIALTIES] ={15,20,30,30};
+int dailyPatientCap[NUM_SPECIALTIES] = {30,20,12,10};
 
 
 // Hospital wards
-
-char *wardNames[] = {"General ward",
+char *wardNames[NUM_WARDS] = {"General ward",
                       "Paediatric ward",
                       "Surgical ward",
                       "ICU (Intensive Care Unit"};
 
-float dailywardRates[] = {3000.00,6000.00,12000.00,25000.00};
-int wardCapacity[] = {20,10,10,05};
-
-
+float dailywardRates[NUM_WARDS] = {3000.00,6000.00,12000.00,25000.00};
+int wardCapacity[NUM_WARDS] = {20,10,10,05};
 int bedOccupancy[NUM_WARDS][MAX_BEDS] = {0};
+
+
+
