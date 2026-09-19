@@ -2,8 +2,12 @@
 #include <stdlib.h>
 
 void welcomeMenu();
+
 int main()
 {
     welcomeMenu();
+
+
+
 
 }
