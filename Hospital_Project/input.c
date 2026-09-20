@@ -29,7 +29,7 @@ void getPatientData(int number){
     printf("--------------------------------\n");
 
     printf("Enter patient Name: ");
-    scanf("%[^\n]",&patientNames[number]);
+    scanf(" %[^\n]",patientNames[number]);
 
     printf("Enter patient age: ");
     scanf("%d",&patientAges[number]);
