@@ -205,7 +205,7 @@ void displaySummaryReport(){
     int highestPatient = -1;
 
 
-    for (int i = 0; i < patientCount; i++){
+    for(int i = 0; i < patientCount; i++){
         if (emergencyLevels[i] == 1){
             normal++;
         }else if (emergencyLevels[i] == 2){
@@ -213,6 +213,15 @@ void displaySummaryReport(){
         }else if (emergencyLevels[i] == 3){
             critical++;
         }
+
+        float baseFee = specialtyFees[patientSpecialties[i] - 1];
+        float surcharge = calculateSurCharge(baseFee,emergencyLevels[i]);
+        float wardCost = calculateWardCost(patientWards[i],admittedDays[i]);
+        float grossTotal = calculateGrossTotal(baseFee,surcharge,wardCost);
+
+        discounts[i] = calculateDiscount(grossTotal,patientAges[i]);
+
+        finalAmounts[i] = calculateFinalAmount(grossTotal,discounts[i]);
 
         totalRevenue += finalAmounts[i];
         totalDiscounts += discounts[i];

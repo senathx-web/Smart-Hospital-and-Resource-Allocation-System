@@ -24,7 +24,7 @@ extern int queueCount[NUM_SPECIALTIES];
 
 // Registering a new patient to the system
 
-void getPatientData(int number){
+int getPatientData(int number){
     printf("--------------------------------\n");
     printf("         Registration\n");
     printf("--------------------------------\n");
@@ -107,7 +107,7 @@ void getPatientData(int number){
             admittedToWard[number] = 0;
             admittedDays[number] = 0;
             assignedBeds[number] = -1;
-            return;
+            return 0;
         }
         assignedBeds[number] = availableBed;
         bedOccupancy[wardIndex][availableBed] = 1;
@@ -131,6 +131,8 @@ void getPatientData(int number){
         assignedBeds[number] = -1;
     }
     queueCount[patientSpecialties[number]-1]++;
+
+    return 1;
 }
 
 

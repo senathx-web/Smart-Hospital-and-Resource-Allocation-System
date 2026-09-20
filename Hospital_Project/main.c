@@ -8,7 +8,7 @@
 extern int patientCount;
 
 void welcomeMenu();
-void getPatientData(int number);
+int getPatientData(int number);
 void displayBedMap();
 void displaySpecialties();
 void displayWards();
@@ -33,10 +33,10 @@ int main()
             case 1:
                 clearScreen();
                 if(patientCount < MAX_PATIENTS){
-                    getPatientData(patientCount);
-                    patientCount++;
-                    printf("Patient registerd!!\n");
-
+                    if(getPatientData(patientCount)){
+                        patientCount++;
+                        printf("Patient registerd!!\n");
+                    }
                 }
                 else{
                     printf("Maximum patients reached.\n");
