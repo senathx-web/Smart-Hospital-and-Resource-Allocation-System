@@ -8,22 +8,23 @@ extern char patientNames[MAX_PATIENTS][50];
 extern int patientAges [MAX_PATIENTS];
 extern int emergencyLevels[MAX_PATIENTS];
 extern int patientSpecialties[MAX_PATIENTS];
-
 extern char *specialtyNames[NUM_SPECIALTIES];
 extern float specialtyFees[NUM_SPECIALTIES];
-
 extern char *wardNames[NUM_WARDS];
 extern float dailywardRates[NUM_WARDS];
 extern int patientWards[MAX_PATIENTS];
-
 extern int admittedToWard[MAX_PATIENTS];
 extern int admittedDays[MAX_PATIENTS];
 extern int assignedBeds[MAX_PATIENTS];
+extern int wardCapacity[NUM_WARDS];
+extern int bedOccupancy[NUM_WARDS][MAX_BEDS];
+
+extern int queueCount[NUM_SPECIALTIES];
 
 
 // Registering a new patient to the system
 
-void getPatientData(int number){
+int getPatientData(int number){
     printf("--------------------------------\n");
     printf("         Registration\n");
     printf("--------------------------------\n");
@@ -49,16 +50,17 @@ void getPatientData(int number){
     printf("-------- Specialties -------\n");
 
     for(int i =0; i< NUM_SPECIALTIES;i++){
-        printf("%d  %s  %f \n",i+1,specialtyNames[i],specialtyFees[i]);
+        printf("%d  %s  %.2f \n",i+1,specialtyNames[i],specialtyFees[i]);
     }
 
     do{
 
         printf("Enter specialty: ");
         scanf("%d",&patientSpecialties[number]);
-    } while(patientSpecialties[number] <1 ||patientSpecialties[number]> NUM_SPECIALTIES);
+    } while(patientSpecialties[number]<1 ||patientSpecialties[number]> NUM_SPECIALTIES);
 
-     printf("\nWard Admission\n");
+
+    printf("\nWard Admission\n");
     printf("1. Yes\n");
     printf("0. No\n");
 
@@ -85,21 +87,52 @@ void getPatientData(int number){
             printf("select ward: ");
             scanf("%d",&patientWards[number]);
 
-            if (patientWards[number] < 1 || patientWards[number] > NUM_WARDS){
+            if (patientWards[number] < 1 || patientWards[number]>NUM_WARDS){
                 printf("Invalid ward.Try again.\n");
             }
-        } while (patientWards[number] < 1 || patientWards[number] > NUM_WARDS);
+        } while (patientWards[number] < 1 || patientWards[number]>NUM_WARDS);
 
-        printf("Enter number of days admitted: ");
-        scanf("%d", &admittedDays[number]);
+        int wardIndex =patientWards[number] - 1;
+        int availableBed = -1;
+
+        for (int bed = 0; bed < wardCapacity[wardIndex];bed++){
+            if (bedOccupancy[wardIndex][bed] == 0){
+                availableBed = bed;
+                break;
+            }
+        }
+        if (availableBed == -1){
+            printf("Sorry, this ward is full.\n");
+            patientWards[number] = 0;
+            admittedToWard[number] = 0;
+            admittedDays[number] = 0;
+            assignedBeds[number] = -1;
+            return 0;
+        }
+        assignedBeds[number] = availableBed;
+        bedOccupancy[wardIndex][availableBed] = 1;
+
+        printf("Bed assigned successfully: Bed #%02d\n",availableBed + 1);
+
+
+        do{
+            printf("Enter number of days admitted: ");
+            scanf("%d", &admittedDays[number]);
+
+            if (admittedDays[number] <= 0){
+                printf("Number of days must be greater than 0.\n");
+            }
+        } while(admittedDays[number] <= 0);
 
     }
-    else
-    {
+    else{
         patientWards[number] = 0;
         admittedDays[number] = 0;
         assignedBeds[number] = -1;
     }
+    queueCount[patientSpecialties[number]-1]++;
+
+    return 1;
 }
 
 

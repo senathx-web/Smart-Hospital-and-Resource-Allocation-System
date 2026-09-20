@@ -1,5 +1,4 @@
 #include<stdio.h>
-
 #define NUM_SPECIALTIES 4
 #define NUM_WARDS 4
 #define MAX_BEDS 20
@@ -21,7 +20,7 @@ int dailyPatientCap[NUM_SPECIALTIES] = {30,20,12,10};
 char *wardNames[NUM_WARDS] = {"General ward",
                       "Paediatric ward",
                       "Surgical ward",
-                      "ICU (Intensive Care Unit"};
+                      "ICU (Intensive Care Unit)"};
 
 float dailywardRates[NUM_WARDS] = {3000.00,6000.00,12000.00,25000.00};
 int wardCapacity[NUM_WARDS] = {20,10,10,05};
@@ -39,5 +38,5 @@ int assignedBeds[MAX_PATIENTS];
 
 
 int queueCount[NUM_SPECIALTIES] = {0};
-int finalAmounts[MAX_PATIENTS];
-float discounts[MAX_PATIENTS];
+float finalAmounts[MAX_PATIENTS] = {0};
+float discounts[MAX_PATIENTS] = {0};
