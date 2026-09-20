@@ -16,7 +16,7 @@ void displayWards();
 void displayPatientBill(int number);
 void displaySummaryReport();
 void displayAllPatients();
-
+void clearScreen();
 
 int main()
 {
@@ -30,6 +30,7 @@ int main()
 
         switch(choice){
             case 1:
+                clearScreen();
                 if(patientCount < MAX_PATIENTS){
                     getPatientData(patientCount);
                     patientCount++;
@@ -41,15 +42,19 @@ int main()
                 }
                 break;
             case 2:
+                clearScreen();
                 displayBedMap();
                 break;
             case 3:
+                clearScreen();
                 displaySpecialties();
                 break;
             case 4:
+                clearScreen();
                 displayWards();
                 break;
             case 5:
+                clearScreen();
                 printf("Enter patient number: ");
                 scanf("%d",&patientNumber);
 
@@ -59,15 +64,19 @@ int main()
                     printf("Invalid patient ID\n");
                 }
             case 6:
+                clearScreen();
                 displayAllPatients();
                 break;
             case 7:
+                clearScreen();
                 displaySummaryReport();
                 break;
             case 8:
+                clearScreen();
                 printf("Exitted from the system.Thank you\n");
                 break;
             default:
+                clearScreen();
                 printf("Invalid choice. Try Again\n");
 
         }
@@ -77,4 +86,9 @@ int main()
 
     return 0;
 
+}
+
+
+void clearScreen(){
+    system("cls");
 }
