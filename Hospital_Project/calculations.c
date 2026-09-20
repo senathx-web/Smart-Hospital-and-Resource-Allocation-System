@@ -8,7 +8,7 @@ extern int wardCapacity[NUM_WARDS];
 extern  int bedOccupancy[NUM_WARDS][MAX_BEDS];
 extern int consultationTimes[NUM_SPECIALTIES];
 
-extern int numbers[];
+
 
 //Calculating waiting time
 float calculatewaitingTime(int specialty, int queCount){
@@ -31,15 +31,15 @@ float calculateSurCharge(float baseFee, int urgeLevel){
 
 //calculating ward costs
 float calculateWardCost(int ward, int days){
-    if (days<= 0){
+    if (ward<= 0 || days<= 0){
         return 0.0;
     }
-    return days * dailywardRates[ward];
+    return days * dailywardRates[ward-1];
 }
 
 //Calculating gross total
-float calculateGrossTotal(float basefee, float surcharge, float wordCost){
-    return basefee + surcharge + wordCost ;
+float calculateGrossTotal(float basefee, float surcharge, float wardCost){
+    return basefee + surcharge + wardCost ;
 }
 
 // calculating discounts

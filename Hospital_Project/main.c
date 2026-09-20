@@ -63,6 +63,7 @@ int main()
                 }else{
                     printf("Invalid patient ID\n");
                 }
+                break;
             case 6:
                 clearScreen();
                 displayAllPatients();
