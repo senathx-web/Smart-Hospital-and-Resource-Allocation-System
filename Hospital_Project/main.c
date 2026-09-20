@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 void welcomeMenu();
-void displayPatientBill(int number);
-void displayAllPatients();
+
+void displaySummaryReport();
 
 int main()
 {
     welcomeMenu();
-    displayAllPatients();
+    displaySummaryReport();
 
 
 

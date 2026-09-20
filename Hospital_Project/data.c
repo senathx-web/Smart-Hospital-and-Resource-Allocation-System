@@ -39,3 +39,5 @@ int assignedBeds[MAX_PATIENTS];
 
 
 int queueCount[NUM_SPECIALTIES] = {0};
+int finalAmounts[MAX_PATIENTS];
+float discounts[MAX_PATIENTS];

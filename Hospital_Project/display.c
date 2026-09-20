@@ -39,6 +39,8 @@ extern int queueCount[NUM_SPECIALTIES];
 extern float calculatewaitingTime(int specialty, int queCount);
 
 extern int patientCount;
+extern int finalAmounts[MAX_PATIENTS];
+extern float discounts[MAX_PATIENTS];
 
 
 void welcomeMenu(){
@@ -158,9 +160,6 @@ void displayPatientBill(int number){
 
 }
 
-
-
-
 void displayAllPatients(){
     if (patientCount == 0){
         printf("\nNo patients registered yet.\n");
@@ -184,3 +183,78 @@ void displayAllPatients(){
                                                                        calculateWardCost(patientWards[i],admittedDays[i])), patientAges[i])));
     }
 }
+
+void displaySummaryReport()
+{
+    int normal = 0;
+    int urgent = 0;
+    int critical = 0;
+
+    float totalRevenue = 0.0;
+    float totalDiscounts = 0.0;
+
+    int highestPatient = -1;
+
+
+    for (int i = 0; i < patientCount; i++){
+        if (emergencyLevels[i] == 1){
+            normal++;
+        }else if (emergencyLevels[i] == 2){
+            urgent++;
+        }else if (emergencyLevels[i] == 3){
+            critical++;
+        }
+
+        totalRevenue += finalAmounts[i];
+        totalDiscounts += discounts[i];
+
+        if (highestPatient == -1 || finalAmounts[i] > finalAmounts[highestPatient]){
+            highestPatient = i;
+        }
+    }
+
+
+    printf("\n");
+    printf("--------------------------------------------\n");
+    printf("          HOSPITAL SUMMARY REPORT \n");
+    printf("--------------------------------------------\n");
+
+    printf("\nTotal Patients: %d\n", patientCount);
+
+    printf("\nUrgency Breakdown\n");
+    printf("Normal   : %d\n", normal);
+    printf("Urgent   : %d\n", urgent);
+    printf("Critical : %d\n", critical);
+
+
+    printf("\nFinancial Summary\n");
+    printf("Total Revenue    : LKR %.2f\n",totalRevenue);
+    printf("Total Discounts  : LKR %.2f\n",totalDiscounts);
+
+    printf("\nBed Occupancy\n");
+
+    for (int ward = 0; ward < NUM_WARDS; ward++){
+        int occupied = 0;
+        for (int bed = 0;bed < wardCapacity[ward];bed++){
+            if (bedOccupancy[ward][bed] == 1){
+                occupied++;
+            }
+        }
+        float percentage =(float)occupied / wardCapacity[ward] *100;
+
+        printf("%s : %.2f%%\n",wardNames[ward],percentage);
+    }
+
+
+    if (highestPatient != -1){
+        printf("\nHighest-Paying Patient\n");
+        printf("Name : %s\n",
+               patientNames[highestPatient]);
+
+        printf("Bill : LKR %.2f\n",
+               finalAmounts[highestPatient]);
+    }
+
+
+}
+
