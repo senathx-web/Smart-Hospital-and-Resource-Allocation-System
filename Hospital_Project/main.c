@@ -3,11 +3,12 @@
 
 void welcomeMenu();
 void displayPatientBill(int number);
+void displayAllPatients();
 
 int main()
 {
     welcomeMenu();
-    displayPatientBill(1);
+    displayAllPatients();
 
 
 

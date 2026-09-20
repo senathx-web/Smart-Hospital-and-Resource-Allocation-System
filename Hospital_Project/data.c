@@ -5,6 +5,7 @@
 #define MAX_BEDS 20
 #define MAX_PATIENTS 500
 
+int patientCount = 0;
 // Doctor specialties
 char *specialtyNames[NUM_SPECIALTIES] = {"General Practice (OPD)",
                            "Paediatrics",

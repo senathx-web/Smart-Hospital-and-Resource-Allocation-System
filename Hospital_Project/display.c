@@ -38,6 +38,8 @@ extern float calculateFinalAmount(float grossTotal, float discount);
 extern int queueCount[NUM_SPECIALTIES];
 extern float calculatewaitingTime(int specialty, int queCount);
 
+extern int patientCount;
+
 
 void welcomeMenu(){
     printf("-----------------------------------------\n");
@@ -158,3 +160,27 @@ void displayPatientBill(int number){
 
 
 
+
+void displayAllPatients(){
+    if (patientCount == 0){
+        printf("\nNo patients registered yet.\n");
+        return;
+    }
+
+    printf("\n");
+    printf("----------------------------------------------------\n");
+    printf("                 PATIENT LIST\n");
+    printf("----------------------------------------------------\n");
+
+    for (int i = 0; i < patientCount; i++){
+        printf("\nPatient ID : PAT-%04d\n", 1001 + i);
+        printf("Name       : %s\n", patientNames[i]);
+        printf("Age        : %d\n", patientAges[i]);
+        printf("Urgency    : Level %d\n", emergencyLevels[i]);
+        printf("Final Bill : LKR %.2f\n",calculateFinalAmount(calculateGrossTotal(specialtyFees[i],
+                                                                       calculateSurCharge(specialtyFees[i],emergencyLevels[i]),
+                                                                       calculateWardCost(patientWards[i],admittedDays[i])), calculateDiscount(calculateGrossTotal(specialtyFees[i],
+                                                                       calculateSurCharge(specialtyFees[i],emergencyLevels[i]),
+                                                                       calculateWardCost(patientWards[i],admittedDays[i])), patientAges[i])));
+    }
+}
