@@ -1,5 +1,4 @@
 #include<stdio.h>
-
 #define NUM_SPECIALTIES 4
 #define NUM_WARDS 4
 #define MAX_BEDS 20

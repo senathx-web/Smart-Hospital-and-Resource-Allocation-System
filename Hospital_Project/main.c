@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #define NUM_SPECIALTIES 4
 #define NUM_WARDS 4
 #define MAX_BEDS 20
 #define MAX_PATIENTS 500
 
-void welcomeMenu();
 extern int patientCount;
 
+void welcomeMenu();
 void getPatientData(int number);
 void displayBedMap();
 void displaySpecialties();
@@ -25,6 +24,8 @@ int main()
 
     do{
         welcomeMenu();
+        //Getting user Input
+
         printf("Enter yout choice: ");
         scanf("%d",&choice);
 
@@ -79,17 +80,13 @@ int main()
             default:
                 clearScreen();
                 printf("Invalid choice. Try Again\n");
-
         }
 
     }while(choice !=8);
-
-
     return 0;
-
 }
 
-
+//Clearing terminal screen after each input
 void clearScreen(){
     system("cls");
 }

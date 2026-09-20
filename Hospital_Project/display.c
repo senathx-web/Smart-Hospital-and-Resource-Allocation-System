@@ -1,6 +1,5 @@
 //Displaying menus/welcome massages/ outputs  goes here
 #include <stdio.h>
-
 #define NUM_SPECIALTIES 4
 #define NUM_WARDS 4
 #define MAX_BEDS 20
@@ -9,16 +8,11 @@
 extern char *wardNames[NUM_WARDS];
 extern int wardCapacity[NUM_WARDS];
 extern int bedOccupancy[NUM_WARDS][MAX_BEDS];
-
 extern char *specialtyNames[NUM_SPECIALTIES];
 extern float specialtyFees[NUM_SPECIALTIES];
 extern int consultationTimes[NUM_SPECIALTIES];
 extern int dailyPatientCap[NUM_SPECIALTIES];
-
-
 extern float dailywardRates[NUM_WARDS];
-
-
 extern char patientNames[MAX_PATIENTS][50];
 extern int patientAges [MAX_PATIENTS];
 extern int emergencyLevels[MAX_PATIENTS];
@@ -27,22 +21,19 @@ extern int patientWards[MAX_PATIENTS];
 extern int admittedToWard[MAX_PATIENTS];
 extern int admittedDays[MAX_PATIENTS];
 extern int assignedBeds[MAX_PATIENTS];
-
 extern float calculateSurCharge(float baseFee, int urgeLevel);
 extern float calculateWardCost(int ward, int days);
-
 extern float calculateGrossTotal(float basefee, float surcharge, float wordCost);
 extern float calculateDiscount(float grossTotal, int age);
 extern float calculateFinalAmount(float grossTotal, float discount);
-
 extern int queueCount[NUM_SPECIALTIES];
 extern float calculatewaitingTime(int specialty, int queCount);
-
 extern int patientCount;
 extern float finalAmounts[MAX_PATIENTS];
 extern float discounts[MAX_PATIENTS];
 
 
+//Displaying welcome menu
 void welcomeMenu(){
     printf("-----------------------------------------\n");
     printf("\t\t WELCOME \t\t\n");
@@ -60,6 +51,7 @@ void welcomeMenu(){
     printf("-----------------------------------------\n");
 }
 
+//Displaying the Bed Map
 void displayBedMap(){
     for (int i = 0; i < NUM_WARDS; i++){
         printf("\n                                 %s               \n\n", wardNames[i]);
@@ -80,6 +72,7 @@ void displayBedMap(){
     }
 }
 
+// Displaying the specialties details
 void displaySpecialties(){
 
     printf("-------------------------------------------------------------------------------------------------\n");
@@ -90,6 +83,7 @@ void displaySpecialties(){
     }
 }
 
+//Displaying ward information
 void displayWards(){
     printf("-------------------------------------------------------------------\n");
     printf("Ward ID    Ward Name                   Bed Rate    Bed Capacity\n");
@@ -99,6 +93,7 @@ void displayWards(){
         }
 }
 
+//Displaying Patient Bill
 void displayPatientBill(int number){
     printf("\n");
     printf("-------------------------------------------------------------------\n");
@@ -156,10 +151,24 @@ void displayPatientBill(int number){
                                                                        calculateWardCost(patientWards[number],admittedDays[number])), calculateDiscount(calculateGrossTotal(specialtyFees[patientSpecialties[number]-1],
                                                                        calculateSurCharge(specialtyFees[patientSpecialties[number]-1],emergencyLevels[number]),
                                                                        calculateWardCost(patientWards[number],admittedDays[number])), patientAges[number])));
-    printf("Estimated waiting Time   : %.2f mins",calculatewaitingTime(patientSpecialties[number]-1,queueCount[patientSpecialties[number] - 1]));
+    printf("Estimated waiting Time   : %.2f mins\n",calculatewaitingTime(patientSpecialties[number]-1,queueCount[patientSpecialties[number] - 1]));
 
+    float discount;
+    float finalAmount;
+
+    discount = calculateDiscount((calculateGrossTotal(specialtyFees[patientSpecialties[number]-1],
+                                 calculateSurCharge(specialtyFees[patientSpecialties[number]-1],emergencyLevels[number]),
+                                 calculateWardCost(patientWards[number],admittedDays[number]))), patientAges[number]);
+
+    finalAmount = calculateFinalAmount((calculateGrossTotal(specialtyFees[patientSpecialties[number]-1],
+                                       calculateSurCharge(specialtyFees[patientSpecialties[number]-1],emergencyLevels[number]),
+                                       calculateWardCost(patientWards[number],admittedDays[number]))), discount);
+
+    finalAmounts[number]= finalAmount;
+    discounts[number]= discount;
 }
 
+//Display all patient details
 void displayAllPatients(){
     if (patientCount == 0){
         printf("\nNo patients registered yet.\n");
@@ -184,6 +193,7 @@ void displayAllPatients(){
     }
 }
 
+//Displaying the summary report
 void displaySummaryReport(){
     int normal = 0;
     int urgent = 0;
