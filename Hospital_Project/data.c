@@ -35,3 +35,6 @@ int patientWards[MAX_PATIENTS];
 int admittedToWard[MAX_PATIENTS];
 int admittedDays[MAX_PATIENTS];
 int assignedBeds[MAX_PATIENTS];
+
+
+int queueCount[NUM_SPECIALTIES] = {0};

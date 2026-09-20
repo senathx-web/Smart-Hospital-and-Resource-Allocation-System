@@ -19,6 +19,24 @@ extern int wardCapacity[NUM_WARDS];
 extern float dailywardRates[NUM_WARDS];
 
 
+extern char patientNames[MAX_PATIENTS][50];
+extern int patientAges [MAX_PATIENTS];
+extern int emergencyLevels[MAX_PATIENTS];
+extern int patientSpecialties[MAX_PATIENTS];
+extern int patientWards[MAX_PATIENTS];
+extern int admittedToWard[MAX_PATIENTS];
+extern int admittedDays[MAX_PATIENTS];
+extern int assignedBeds[MAX_PATIENTS];
+
+extern float calculateSurCharge(float baseFee, int urgeLevel);
+extern float calculateWardCost(int ward, int days);
+
+extern float calculateGrossTotal(float basefee, float surcharge, float wordCost);
+extern float calculateDiscount(float grossTotal, int age);
+extern float calculateFinalAmount(float grossTotal, float discount);
+
+extern int queueCount[NUM_SPECIALTIES];
+extern float calculatewaitingTime(int specialty, int queCount);
 
 
 void welcomeMenu(){
@@ -76,5 +94,67 @@ void displayWards(){
             printf("%-10d%-26s   %-10.2f   %d \n", i + 1,wardNames[i],dailywardRates[i],wardCapacity[i]);
         }
 }
+
+void displayPatientBill(int number){
+    printf("\n");
+    printf("-------------------------------------------------------------------\n");
+    printf("              SMART HOSPITAL ADMISSION & BILL\n");
+    printf("-------------------------------------------------------------------\n");
+
+    printf("Patient ID               : PAT-%04d\n",1001 + number);
+    printf("Patient Name             : %s\n",patientNames[number]);
+    printf("Age                      : %d", patientAges[number]);
+
+    if (patientAges[number]<5 || patientAges >65){
+        printf(" (15% subsidy Eligible)");
+    }
+    printf("\n");
+
+    printf("Speciality               : %s\n",patientSpecialties[number]);
+
+    if(admittedToWard[number]== 1){
+        printf("Assigned Ward  : %s (BED #%02d)\n",wardNames[patientWards[number]-1], assignedBeds[number] +1);
+    }
+    else{
+        printf("Assigned Ward            : OPD\n");
+    }
+
+    printf("Urgency Level            : ");
+    if(emergencyLevels[number]==1){
+        printf("Level 1 (Normal)\n");
+    }
+    else if (emergencyLevels[number] == 2){
+        printf("Level 2 (Urgent)\n");
+    }
+    else{
+        printf("Level 3 (Critical)\n");
+    }
+    printf("-------------------------------------------------------------------\n");
+
+    printf("Base Consultation Fee    : LKR %.2f\n", specialtyFees[number]);
+    printf("Emergency Surcharge      : LKR %.2f\n", calculateSurCharge(specialtyFees[number],emergencyLevels[number]));
+    printf("Ward stay cost (%d Days)  : LKR %.2f\n", admittedDays[number],calculateWardCost(patientWards[number],admittedDays[number]));
+
+    printf("-------------------------------------------------------------------\n");
+
+    printf("Gross Total Bill         : LKR %.2f\n",calculateGrossTotal(specialtyFees[number],
+                                                                       calculateSurCharge(specialtyFees[number],emergencyLevels[number]),
+                                                                       calculateWardCost(patientWards[number],admittedDays[number])));
+
+    printf("Age subsidy Discount     : LKR -%.2f\n",calculateDiscount(calculateGrossTotal(specialtyFees[number],
+                                                                       calculateSurCharge(specialtyFees[number],emergencyLevels[number]),
+                                                                       calculateWardCost(patientWards[number],admittedDays[number])), patientAges[number]));
+
+    printf("-------------------------------------------------------------------\n");
+
+    printf("Final Payable Amount     : LKR %.2f\n",calculateFinalAmount(calculateGrossTotal(specialtyFees[number],
+                                                                       calculateSurCharge(specialtyFees[number],emergencyLevels[number]),
+                                                                       calculateWardCost(patientWards[number],admittedDays[number])), calculateDiscount(calculateGrossTotal(specialtyFees[number],
+                                                                       calculateSurCharge(specialtyFees[number],emergencyLevels[number]),
+                                                                       calculateWardCost(patientWards[number],admittedDays[number])), patientAges[number])));
+    printf("Estimated waiting Time   : %.2f mins",calculatewaitingTime(patientSpecialties[number],queueCount[number]));
+
+}
+
 
 
