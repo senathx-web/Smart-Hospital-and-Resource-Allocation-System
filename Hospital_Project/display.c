@@ -184,8 +184,7 @@ void displayAllPatients(){
     }
 }
 
-void displaySummaryReport()
-{
+void displaySummaryReport(){
     int normal = 0;
     int urgent = 0;
     int critical = 0;
