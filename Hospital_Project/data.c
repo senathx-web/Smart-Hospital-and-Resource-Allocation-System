@@ -5,6 +5,7 @@
 #define MAX_BEDS 20
 #define MAX_PATIENTS 500
 
+int patientCount = 0;
 // Doctor specialties
 char *specialtyNames[NUM_SPECIALTIES] = {"General Practice (OPD)",
                            "Paediatrics",
@@ -35,3 +36,8 @@ int patientWards[MAX_PATIENTS];
 int admittedToWard[MAX_PATIENTS];
 int admittedDays[MAX_PATIENTS];
 int assignedBeds[MAX_PATIENTS];
+
+
+int queueCount[NUM_SPECIALTIES] = {0};
+int finalAmounts[MAX_PATIENTS];
+float discounts[MAX_PATIENTS];
